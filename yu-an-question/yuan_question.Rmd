@@ -56,4 +56,15 @@ mdou_pol1 <- glmer(formula = yn ~ dou*some_all +age_group+ (1|participant) +(1|t
 summary(mdou_pol1)
 print(mdou_pol1)
 ```
+```{r}
+yy_data %>% filter(age_group == "0") %>% group_by(dou) %>% summarize(N = n(), mean_yn = mean(yn))
+
+```
+
+
+```{r}
+children <- yy_data %>% filter(age_group == "1") %>% group_by(participant, dou) %>% summarize(N = n(), mean_yn = mean(yn))
+ggplot(children, aes(mean_yn)) + geom_bar() + facet_wrap(~ dou)
+
+```
 
