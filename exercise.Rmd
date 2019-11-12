@@ -1,0 +1,17 @@
+---
+title: "Exercise"
+output: html_notebook
+---
+Simulating data with parameters:
+```{r}
+n_obs <- 1000
+beta_0 <- 1.5
+beta_1 <- 3
+sigma <- 2 #SD
+
+x <- rnorm(n_obs) #random continuous variable
+errors <- rnorm(n_obs, mean =0, sd = sigma) #use sigma for errors
+y <- beta_0 +beta_1*x+errors
+summary(lm(y~x))
+```
+
