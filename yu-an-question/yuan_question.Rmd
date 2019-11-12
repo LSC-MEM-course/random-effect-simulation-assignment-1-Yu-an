@@ -3,4 +3,13 @@ title: "Question about MEM"
 author: "Yu'an Yang"
 output: html_notebook
 ---
+The data is an experiment I did with Mandarin-speaking three-year-olds. The study is a modified version of Truth Value Judgment Task. Instead of saying true/false, the kids have to decide whether they need to answer to a wh-question or respond to a declarative.
+
+```{r}
+yy_data <- read.csv("/Users/ceshi/Documents/Work/Rscripts/Multi_level_models/group_session/random-effect-simulation-assignment-1-Yu-an/yu-an-question/data.csv")
+```
+
+The dependent variable is "yn", whether the response from participant contains a 'yes/no' marker. The independent varialbe is "dou" (whether the test sentence has a morpheme "dou") and "some_all", whether the scenario in a story is a "some" scenario, or a "all" scenario. 
+
+
 
