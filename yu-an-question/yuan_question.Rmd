@@ -30,8 +30,10 @@ df_dou <- yy_data %>%
   group_by(dou, age_group, some_all) %>% 
   summarise(avg_prop = mean(proportion), sd=sd(proportion), n=n()) %>% 
   mutate(SEM = sd/sqrt(n),upper=avg_prop+SEM, lower= avg_prop-SEM)
+df_dou$dou <- as.factor(df_dou$dou)
+df_dou$some_all <- as.factor(df_dou$some_all)
 label_facet <- c("0" ="adults", "1" = "children")
-pdou<- ggplot(df_dou, aes(x=dou, y=avg_prop, fill = items))+
+pdou<- ggplot(df_dou, aes(x=dou, y=avg_prop, fill = some_all))+
   geom_bar(stat="identity", position = position_dodge(0.9)) + 
   geom_errorbar(aes(ymin=lower, ymax=upper), stat = "identity", width = 0.2, position=position_dodge(0.9)) +
   facet_wrap(~ age_group, labeller=labeller(age_group = label_facet)) +
@@ -41,15 +43,14 @@ pdou<- ggplot(df_dou, aes(x=dou, y=avg_prop, fill = items))+
   axis.title.x = element_blank(),
   axis.text.x = element_text(angle = 45, hjust = 1)
   ) +
-  scale_x_discrete(labels=c("+Dou","-Dou")) +
-  scale_fill_manual(values=cbPalette[c(2,5)], name = "Scenario", breaks=c(1, 0), labels=c("all", "some")) +
- # scale_color_manual(name = "", values = cbbPalette[c(1,1)], ) +
+ # scale_x_discrete(labels=c("+Dou","-Dou")) +
+ # scale_fill_manual(values=cbPalette[c(2,5)], name = "Scenario", breaks=c(1, 0), labels=c("all", "some")) +
   theme_bw()
 
 pdou
 ```
 
-But I'm not sure I understand what's going on here when I run this model:
+So when I run the model, there's a warning "isSingular", and I'm not sure what it entails:
 ```{r stats}
 mdou_pol1 <- glmer(formula = yn ~ dou*some_all +age_group+ (1|participant) +(1|test_number), family = binomial, data = yy_data)
 summary(mdou_pol1)
